@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Zwaluwen A1",
+    "indoor": {
+      "pool_id": "93787"
+    },
+    "outdoor": {
+      "pool_id": "91955"
+    }
+  },
+  {
+    "name": "Zwaluwen B1",
+    "indoor": {
+      "pool_id": "93830"
+    },
+    "outdoor": {
+      "pool_id": "92114"
+    }
+  },
+  {
+    "name": "Zwaluwen D1",
+    "indoor": {
+      "pool_id": "93942"
+    },
+    "outdoor": {
+      "pool_id": "92228"
+    }
+  },
+  {
+    "name": "Zwaluwen D2",
+    "indoor": {
+      "pool_id": "92869"
+    },
+    "outdoor": {
+      "pool_id": "93506"
+    }
+  },
+  {
+    "name": "Zwaluwen E1",
+    "indoor": {
+      "pool_id": "93203"
+    },
+    "outdoor": {
+      "pool_id": "92463"
+    }
+  },
+  {
+    "name": "Zwaluwen E2",
+    "indoor": {
+      "pool_id": "93153"
+    },
+    "outdoor": {
+      "pool_id": "92377"
+    }
+  },
+  {
+    "name": "Zwaluwen F1",
+    "indoor": {
+      "pool_id": "93310"
+    },
+    "outdoor": {
+      "pool_id": "91927"
+    }
+  }
+]

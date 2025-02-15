@@ -1,0 +1,13 @@
+.table {
+    @apply w-full;
+}
+
+.tableHeader {
+    @apply p-1;
+    @apply font-bold;
+    @apply text-left;
+}
+
+.tableCell {
+    @apply p-1;
+}
