@@ -29,7 +29,7 @@ export default function LatestNews() {
         setLoading(false);
         console.error('Error fetching program:', error)
       });
-  }, []);
+  }, [fetchUrl]);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 w-full h-full">
