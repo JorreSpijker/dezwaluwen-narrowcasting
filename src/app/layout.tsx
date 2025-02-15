@@ -18,9 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-
-const pauseTransition = true;
+const pauseTransition = false;
 
 export default function RootLayout({
   children,
