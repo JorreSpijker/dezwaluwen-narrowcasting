@@ -23,7 +23,7 @@ interface AirtableRecord {
 }
 
 export default function GeneralPage() {
-  const [airtableData, setAirtableData] = useState<AirtableRecord[]>([]);
+  // const [airtableData, setAirtableData] = useState<AirtableRecord[]>([]);
 
   useEffect(() => {
     if (!process.env.AIRTABLE_API || !process.env.AIRTABLE_BASE) {
@@ -58,11 +58,12 @@ export default function GeneralPage() {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 gap-8 max-w-7xl lg:w-full px-8 lg:mx-auto">
+    <div className="grid grid-cols-2 gap-8 max-w-7xl lg:w-full px-4 lg:mx-auto">
       <div className="col-span-2 lg:col-start-1 lg:w-full lg:max-w-7xl lg:grid-cols-2">
-        {airtableData.map((data, index) => (
+        <Alert label="Let op" content="Dit is een belangrijke melding" />
+        {/* {airtableData.map((data, index) => (
           data.fields.show && <Alert key={index} label={data.fields.label} content={data.fields.message} />
-        ))}
+        ))} */}
       </div>
       <div className="col-span-2 lg:col-span-1 lg:col-start-1 lg:w-full lg:max-w-7xl lg:grid-cols-2">
         <Program />

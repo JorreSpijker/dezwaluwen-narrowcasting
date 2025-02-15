@@ -24,7 +24,7 @@ export default function StandingsPage() {
   }, []);
   
   return (
-    <div className="grid lg:grid-cols-2 gap-8 max-w-7xl lg:w-full mx-8 px-8 lg:mx-auto">
+    <div className="grid lg:grid-cols-2 gap-8 max-w-7xl lg:w-full px-4 lg:mx-auto">
        {loading ? (
           <div className="flex justify-center items-center">
             <ClipLoader size={50} color={"#123abc"} loading={loading} />

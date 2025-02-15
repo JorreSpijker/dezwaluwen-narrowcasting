@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 
 
-const pauseTransition = false;
+const pauseTransition = true;
 
 export default function RootLayout({
   children,
