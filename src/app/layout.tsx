@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProgressBar from "./components/ProgressBar/ProgressBar";
 import Head from "next/head";
+import { getOptions } from "@/utils/GetOptions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +21,29 @@ const geistMono = Geist_Mono({
 
 const pauseTransition = false;
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  // const [options, setOptions] = useState([]);
+  // const [pauseTransition, setPauseTransition] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchOptions = async () => {
+  //     const optionsData = await getOptions();
+  //     setOptions(optionsData);
+  //     const pauseTransition = optionsData.find((option) => option.key === "pause")?.value === true;
+  //     setPauseTransition(pause);
+  //   };
+  //   fetchOptions();
+  // }, []);
+
+
+  // console.log(options[2].value);
+  
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -33,7 +52,7 @@ export default function RootLayout({
     const duration = 10000; // 10 seconds
     const interval = 100; // Update every 100ms
 
-    if (pauseTransition) {
+    if (pauseTransition === false) {
       return;
     }
 
@@ -55,7 +74,7 @@ export default function RootLayout({
       clearTimeout(timer);
       clearInterval(progressInterval);
     };
-  }, [currentIndex, router]);
+  }, [currentIndex, router, pauseTransition]);
 
   return (
     <html lang="en">
