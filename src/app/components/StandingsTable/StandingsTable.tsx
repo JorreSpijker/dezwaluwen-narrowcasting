@@ -26,6 +26,9 @@ interface Team {
 
 interface Standings {
   standings: Team[];
+  pool: {
+    name: string;
+  }
 }
 
 interface StandingsTableProps {

@@ -30,14 +30,14 @@ export default function RootLayout({
   
   const [pauseTransition, setPauseTransition] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchOptions = async () => {
-  //     const optionsData = await getOptions();
-  //     const pauseTransition = optionsData.find((option) => option.key === "pause")?.value;
-  //     setPauseTransition(pauseTransition);
-  //   };
-  //   fetchOptions();
-  // }, []);
+  useEffect(() => {
+    const fetchOptions = async () => {
+      const optionsData = await getOptions();
+      const pauseTransition = optionsData.find((option) => option.key === "pause")?.value;
+      setPauseTransition(pauseTransition);
+    };
+    fetchOptions();
+  }, []);
 
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -48,7 +48,6 @@ export default function RootLayout({
     const interval = 100; // Update every 100ms
 
 
-    return;
     if (pauseTransition === false) {
       return;
     }

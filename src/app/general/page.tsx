@@ -3,9 +3,6 @@
 import LatestResults from "../components/LatestResults/LatestResults";
 import Program from "../components/ProgramAllTeams/ProgramAllTeams";
 // import LatestNews from "../components/LatestNews/LatestNews";
-import Alert from "../components/Alert/Alerts";
-import { getMessages } from "@/utils/GetMessages";
-import { useEffect, useState } from "react";
 
 // https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2
 // https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2/program
