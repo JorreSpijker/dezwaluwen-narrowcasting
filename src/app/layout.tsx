@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const pauseTransition = false;
-
+export const FetchPathJeugd = '/2024-2025/veld_vj/teams_jeugd.json';
+export const FetchPathSenioren = '/2024-2025/veld_vj/teams_senioren.json';
 
 export default function RootLayout({
   children,
@@ -28,22 +28,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   
-  // const [options, setOptions] = useState([]);
-  // const [pauseTransition, setPauseTransition] = useState(false);
+  const [pauseTransition, setPauseTransition] = useState(false);
 
   // useEffect(() => {
   //   const fetchOptions = async () => {
   //     const optionsData = await getOptions();
-  //     setOptions(optionsData);
-  //     const pauseTransition = optionsData.find((option) => option.key === "pause")?.value === true;
-  //     setPauseTransition(pause);
+  //     const pauseTransition = optionsData.find((option) => option.key === "pause")?.value;
+  //     setPauseTransition(pauseTransition);
   //   };
   //   fetchOptions();
   // }, []);
 
-
-  // console.log(options[2].value);
-  
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -52,6 +47,8 @@ export default function RootLayout({
     const duration = 10000; // 10 seconds
     const interval = 100; // Update every 100ms
 
+
+    return;
     if (pauseTransition === false) {
       return;
     }
@@ -85,7 +82,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="bg-stone-50 flex flex-col gap-8 m-x-8 h-dvh">
+        <main className="bg-stone-50 flex flex-col gap-8 m-x-8 h-dvh ">
           <div className="w-full bg-white-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-80 border border-gray-100 sticky top-0 shadow-[0_14px_24px_rgba(0,0,0,0.1)] ">
             <ProgressBar progress={progress} />
             <div className="max-w-7xl lg:w-full px-8 lg:mx-auto py-8 w-full">

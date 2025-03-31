@@ -1,9 +1,9 @@
 
 import { supabase } from "../lib/supabase";
 
-export const getOptions = async () => {
+export const getMessages = async () => {
   try {
-    const { data, error } = await supabase.from("nc_options").select("*");
+    const { data, error } = await supabase.from("nc_messages").select("*");
     if (error) {
       throw error;
     }

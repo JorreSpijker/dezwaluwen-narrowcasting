@@ -15,7 +15,7 @@ interface News {
 export default function LatestNews() {
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const fetchUrl = `https://www.dezwaluwen.nl/?rest_route=/`;
+  const fetchUrl = `https://www.dezwaluwen.nl/?rest_route=/wp/v2/posts`;
 
   useEffect(() => {
     setLoading(true);

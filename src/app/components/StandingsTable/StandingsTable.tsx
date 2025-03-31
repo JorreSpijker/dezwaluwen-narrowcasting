@@ -31,10 +31,11 @@ interface Standings {
 interface StandingsTableProps {
   teamName: string;
   poolId: string;
+  name: string;
 }
 
 export default function StandingsTable({ teamName, poolId }: StandingsTableProps) {
-  const [standings, setStandings] = useState<Standings[]>([]);
+  const [standingsData, setStandingsData] = useState<Standings[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
     fetch(`https://api-mijn.korfbal.nl/api/v2/matches/pools/${poolId}/standing`)
       .then(response => response.json())
       .then(data => {
-        setStandings(data)
+        setStandingsData(data)
         setLoading(false);
       })
       .catch(error => {
@@ -50,7 +51,7 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
         console.error('Error fetching standings:', error)
       });
   }, [poolId]);
-
+  console.log(standingsData);
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 h-full">
       {teamName ? <h2 className="font-bold text-xl mb-4">{teamName}</h2> : null}
@@ -59,6 +60,11 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
         </div>
       ) : (
+          <div>
+          { standingsData[0] ? (
+            <p>{standingsData[0].pool.name }</p>
+          )
+         : undefined }
         <table className={styles.table}>
           <thead>
             <tr className={styles.tableHeader}>
@@ -75,7 +81,7 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
             </tr>
           </thead>
           <tbody>
-            {standings[0]?.standings.map((team: Team, index: number) => (
+            {standingsData[0]?.standings.map((team: Team, index: number) => (
               <tr key={index} className={team.team.name.includes('Zwaluwen') ? styles.homeclub : ''}>
                 <td className={styles.tableCell}>{index + 1}</td>
                 <td className={styles.tableCell}>{team.team.name}</td>
@@ -91,6 +97,7 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
             ))}
           </tbody>
         </table>
+          </div>
       )}
     </div>
   )

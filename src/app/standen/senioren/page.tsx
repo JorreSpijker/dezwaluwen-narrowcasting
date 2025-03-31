@@ -4,14 +4,15 @@ import { Teams } from "@/interfaces/Teams";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import StandingsTable from "@/app/components/StandingsTable/StandingsTable";
+import { FetchPathSenioren } from "@/app/layout";
 
 export default function StandingsPage() {
 
-  const [teams, setTeams] = useState<Teams[]>([]);
+const [teams, setTeams] = useState<Teams[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
       setLoading(true);
-      fetch('/teams_senioren.json')
+      fetch(FetchPathSenioren)
         .then(response => response.json())
         .then(data => {
           setTeams(data)
@@ -32,7 +33,7 @@ export default function StandingsPage() {
         ) : (
           teams.map((team, index) => (
             <div key={index} className="">
-              <StandingsTable key={index} teamName={team.name} poolId={team.indoor.pool_id} />
+              <StandingsTable key={index} teamName={team.name} poolId={team.pool} />
             </div>
           ))
         )}
