@@ -54,7 +54,6 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
         console.error('Error fetching standings:', error)
       });
   }, [poolId]);
-  console.log(standingsData);
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 h-full">
       {teamName ? <h2 className="font-bold text-xl mb-4">{teamName}</h2> : null}

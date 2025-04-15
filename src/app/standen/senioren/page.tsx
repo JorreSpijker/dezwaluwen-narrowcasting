@@ -4,7 +4,7 @@ import { Teams } from "@/interfaces/Teams";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import StandingsTable from "@/app/components/StandingsTable/StandingsTable";
-import { FetchPathSenioren } from "@/app/layout";
+import { FetchPathSenioren } from "@/constants/paths";
 
 export default function StandingsPage() {
 

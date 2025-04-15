@@ -19,9 +19,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const FetchPathJeugd = '/2024-2025/veld_vj/teams_jeugd.json';
-export const FetchPathSenioren = '/2024-2025/veld_vj/teams_senioren.json';
-
 export default function RootLayout({
   children,
 }: Readonly<{
