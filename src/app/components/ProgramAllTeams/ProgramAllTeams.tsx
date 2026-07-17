@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import styles from './ProgramAllTeams.module.css'
 import { ClipLoader } from "react-spinners"
 import { checkIfInputIsZwaluwen } from "@/utils/DisplayHelpers";
 import { clsx } from 'clsx';
-import { changeDateFormat, changeDateFormatToTime, getNextweek, getTodayDate } from "@/utils/DateHelpers";
+import { changeDateFormat, changeDateFormatToTime } from "@/utils/DateHelpers";
+import { useResilientFetch } from "@/utils/useResilientFetch"
+import Alert from "@/app/components/Alert/Alerts"
 
 interface Official {
   roleDescription: string;
@@ -38,53 +39,49 @@ interface Program {
 }
 
 export default function ProgramAllTeams() {
-  const [program, setProgram] = useState<Program[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const today = getTodayDate();
-  const nextWeek = getNextweek();
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2/program?=&dateFrom=${today}&dateTo=${nextWeek}`)
-      .then(response => response.json())
-      .then(data => {
-        setProgram(data)
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error('Error fetching program:', error)
-      });
-  }, [today, nextWeek]);
+  const { data, loading, error } = useResilientFetch<Program[]>(
+    '/mock-resultaten-programma.json',
+    'program-all-teams'
+  );
+  const program = data ?? [];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 w-full lg:col-span-2">
-      <h2 className="font-bold text-xl mb-4">Programma (7 dagen)</h2>
+    <div className={clsx(styles.card, 'lg:col-span-2')}>
+      <div className={styles.cardHeader}>
+        <h2 className={styles.title}>Programma (7 dagen)</h2>
+      </div>
+      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
         </div>
       ) : (
         <table className={styles.table}>
+          <colgroup>
+            <col className={styles.colDate} />
+            <col className={styles.colTime} />
+            <col className={styles.colTeam} />
+            <col className={styles.colTeam} />
+            <col className={styles.colWide} />
+          </colgroup>
           <thead>
-            <tr className={styles.tableHeader}>
-              <th className="">Datum</th>
-              <th className="">Tijd</th>
-              <th className="">Thuisploeg</th>
-              <th className="">Uitploeg</th>
-              <th className="">Scheidsrechter</th>
+            <tr>
+              <th className={styles.tableHeader}>Datum</th>
+              <th className={clsx(styles.tableHeader, styles.tableHeaderCenter)}>Tijd</th>
+              <th className={styles.tableHeader}>Thuisploeg</th>
+              <th className={styles.tableHeader}>Uitploeg</th>
+              <th className={styles.tableHeader}>Scheidsrechter</th>
             </tr>
           </thead>
           <tbody>
             {program.flatMap(result => result.matches).map((match, index) => (
               <tr key={index}>
                 <td className={styles.tableCell}>{changeDateFormat(match.date)}</td>
-                <td className={styles.tableCell}>{changeDateFormatToTime(match.date)}</td>
-                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.home.name) ? 'font-bold' : '')}>
+                <td className={clsx(styles.tableCell, styles.tableCellCenter)}>{changeDateFormatToTime(match.date)}</td>
+                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.home.name) ? styles.tableCellStrong : '')}>
                   {match.teams.home.name}
                 </td>
-                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.away.name) ? 'font-bold' : '')}>{match.teams.away.name}</td>
+                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.away.name) ? styles.tableCellStrong : '')}>{match.teams.away.name}</td>
                 <td className={styles.tableCell}>
                 {match.official.find((official: Official) => official.roleDescription === "Scheidsrechter")?.firstname} {match.official.find((official: Official) => official.roleDescription === "Scheidsrechter")?.infix ? match.official.find((official: Official) => official.roleDescription === "Scheidsrechter")?.infix + ' ' : ''}{match.official.find((official: Official) => official.roleDescription === "Scheidsrechter")?.name}
                 </td>

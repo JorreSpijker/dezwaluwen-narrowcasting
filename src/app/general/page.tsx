@@ -23,19 +23,19 @@ export default function GeneralPage() {
     // }, []);
     
   return (
-    <div className="grid grid-cols-2 gap-8 max-w-7xl lg:w-full px-4 lg:mx-auto">
-      <div className="col-span-2 lg:col-start-1 lg:w-full lg:max-w-7xl lg:grid-cols-2 flex flex-col gap-2">
+    <div className="grid grid-cols-2 gap-8 max-w-[1800px] lg:w-full px-4 lg:mx-auto">
+      <div className="col-span-2 lg:col-start-1 lg:w-full lg:max-w-[1800px] lg:grid-cols-2 flex flex-col gap-2">
         {/* {messages.length > 0 ? messages.map((message: any, index: number, style: string) => (
           <Alert key={index} label={message.label} content={message.content} style={message.style} />
         )) : null} */}
       </div>
-      <div className="col-span-2 lg:col-span-2 lg:col-start-1 lg:w-full lg:max-w-7xl lg:grid-cols-2">
+      <div className="col-span-2 lg:col-span-2 lg:col-start-1 lg:w-full lg:max-w-[1800px] lg:grid-cols-2">
         <Program />
       </div>
-      {/* <div className="col-span-2 lg:col-span-1 lg:col-start-2 lg:w-full lg:max-w-7xl lg:grid-cols-2 h-full">
+      {/* <div className="col-span-2 lg:col-span-1 lg:col-start-2 lg:w-full lg:max-w-[1800px] lg:grid-cols-2 h-full">
         <LatestNews />
       </div> */}
-      <div className="col-span-2 lg:col-span-2 lg:col-start-1 lg:w-full lg:max-w-7xl lg:grid-cols-2">
+      <div className="col-span-2 lg:col-span-2 lg:col-start-1 lg:w-full lg:max-w-[1800px] lg:grid-cols-2">
         <LatestResults />
       </div>
     </div>

@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import { ClipLoader } from "react-spinners"
 import { changeDateFormat } from "@/utils/DateHelpers";
+import { useResilientFetch } from "@/utils/useResilientFetch"
+import Alert from "@/app/components/Alert/Alerts"
 
 interface News {
   id: number;
@@ -13,27 +14,15 @@ interface News {
 }
 
 export default function LatestNews() {
-  const [news, setNews] = useState<News[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const fetchUrl = `https://www.dezwaluwen.nl/?rest_route=/wp/v2/posts`;
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(fetchUrl)
-      .then(response => response.json())
-      .then(data => {
-        setNews(data)
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error('Error fetching program:', error)
-      });
-  }, [fetchUrl]);
+  const { data, loading, error } = useResilientFetch<News[]>(fetchUrl, 'latest-news');
+  const news = data ?? [];
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 w-full h-full">
-      <h2 className="font-bold text-xl mb-4">Laatste nieuws</h2>
+      <h2 className="font-bold text-2xl mb-4">Laatste nieuws</h2>
+      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />

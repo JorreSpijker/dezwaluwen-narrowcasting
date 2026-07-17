@@ -1,3 +1,21 @@
+@reference "../../globals.css";
+
+.card {
+    @apply bg-white rounded-xl border border-gray-200 p-6 h-full;
+}
+
+.cardHeader {
+    @apply flex items-baseline justify-between gap-4 pb-3 mb-4;
+}
+
+.teamName {
+    @apply font-bold text-2xl text-gray-800;
+}
+
+.poolName {
+    @apply text-sm text-gray-500 uppercase tracking-wide;
+}
+
 .table {
     @apply w-full;
 }
@@ -7,17 +25,25 @@
 }
 
 .tableHeader {
-    @apply p-1;
-    @apply font-bold;
-    @apply text-left;
+    @apply py-2 px-1 text-left text-sm font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-200;
+}
+
+.tableHeaderCenter {
+    @apply text-center;
 }
 
 .tableCell {
-    @apply p-1;
-    @apply text-left;
+    @apply py-2 px-1 text-left tabular-nums border-b border-gray-100;
+}
+
+.tableCellCenter {
+    @apply text-center;
+}
+
+.tableCellStrong {
+    @apply font-bold text-gray-900;
 }
 
 .tableCellSmall {
-    @apply w-7;
-    @apply lg:w-9;
+    @apply w-7 lg:w-9;
 }

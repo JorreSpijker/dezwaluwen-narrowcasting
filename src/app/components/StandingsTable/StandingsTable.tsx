@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import styles from './StandingsTable.module.css'
 import { ClipLoader } from "react-spinners"
+import { useResilientFetch } from "@/utils/useResilientFetch"
+import Alert from "@/app/components/Alert/Alerts"
 
 interface TeamStats {
   played: number;
@@ -39,68 +40,57 @@ interface StandingsTableProps {
 }
 
 export default function StandingsTable({ teamName, poolId }: StandingsTableProps) {
-  const [standingsData, setStandingsData] = useState<Standings[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://api-mijn.korfbal.nl/api/v2/matches/pools/${poolId}/standing`)
-      .then(response => response.json())
-      .then(data => {
-        setStandingsData(data)
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error('Error fetching standings:', error)
-      });
-  }, [poolId]);
+  const { data, loading, error } = useResilientFetch<Standings[]>(
+    `https://api-mijn.korfbal.nl/api/v2/matches/pools/${poolId}/standing`,
+    `standings-${poolId}`
+  );
+  const standingsData = data ?? [];
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 h-full">
-      {teamName ? <h2 className="font-bold text-xl mb-4">{teamName}</h2> : null}
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
+        {teamName ? <h2 className={styles.teamName}>{teamName}</h2> : null}
+        {!loading && standingsData[0] ? (
+          <span className={styles.poolName}>{standingsData[0].pool.name}</span>
+        ) : null}
+      </div>
+      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
         </div>
       ) : (
-          <div>
-          { standingsData[0] ? (
-            <p>{standingsData[0].pool.name }</p>
-          )
-         : undefined }
         <table className={styles.table}>
           <thead>
-            <tr className={styles.tableHeader}>
-              <th className={styles.tableCellSmall}></th>
-              <th className="">Naam</th>
-              <th className={styles.tableCellSmall}>G</th>
-              <th className={styles.tableCellSmall}>W</th>
-              <th className={styles.tableCellSmall}>G</th>
-              <th className={styles.tableCellSmall}>V</th>
-              <th className={styles.tableCellSmall}>P</th>
-              <th className={styles.tableCellSmall}>Ds</th>
-              <th className={styles.tableCellSmall}>+</th>
-              <th className={styles.tableCellSmall}>-</th>
+            <tr>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}></th>
+              <th className={styles.tableHeader}>Naam</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>G</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>W</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>G</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>V</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>P</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>Ds</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>+</th>
+              <th className={`${styles.tableHeader} ${styles.tableHeaderCenter} ${styles.tableCellSmall}`}>-</th>
             </tr>
           </thead>
           <tbody>
             {standingsData[0]?.standings.map((team: Team, index: number) => (
               <tr key={index} className={team.team.name.includes('Zwaluwen') ? styles.homeclub : ''}>
-                <td className={styles.tableCell}>{index + 1}</td>
-                <td className={styles.tableCell}>{team.team.name}</td>
-                <td className={styles.tableCell}>{team.stats.played}</td>
-                <td className={styles.tableCell}>{team.stats.won}</td>
-                <td className={styles.tableCell}>{team.stats.draw}</td>
-                <td className={styles.tableCell}>{team.stats.lost}</td>
-                <td className={styles.tableCell}>{team.stats.points}</td>
-                <td className={styles.tableCell}>{team.stats.goals.difference}</td>
-                <td className={styles.tableCell}>{team.stats.goals.for}</td>
-                <td className={styles.tableCell}>{team.stats.goals.against}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{index + 1}</td>
+                <td className={`${styles.tableCell} ${team.team.name.includes('Zwaluwen') ? styles.tableCellStrong : ''}`}>{team.team.name}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.played}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.won}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.draw}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.lost}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter} ${styles.tableCellStrong}`}>{team.stats.points}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.goals.difference}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.goals.for}</td>
+                <td className={`${styles.tableCell} ${styles.tableCellCenter}`}>{team.stats.goals.against}</td>
               </tr>
             ))}
           </tbody>
         </table>
-          </div>
       )}
     </div>
   )

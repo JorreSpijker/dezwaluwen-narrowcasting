@@ -1,31 +1,19 @@
 'use client'
 
 import { Teams } from "@/interfaces/Teams";
-import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import StandingsTable from "@/app/components/StandingsTable/StandingsTable";
 import { FetchPathSenioren } from "@/constants/paths";
+import { useResilientFetch } from "@/utils/useResilientFetch";
+import Alert from "@/app/components/Alert/Alerts";
 
 export default function StandingsPage() {
+  const { data, loading, error } = useResilientFetch<Teams[]>(FetchPathSenioren, 'teams-senioren');
+  const teams = data ?? [];
 
-const [teams, setTeams] = useState<Teams[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-      setLoading(true);
-      fetch(FetchPathSenioren)
-        .then(response => response.json())
-        .then(data => {
-          setTeams(data)
-          setLoading(false);
-        })
-        .catch(error => {
-          setLoading(false);
-          console.error('Error fetching standings:', error)
-        });
-  }, []);
-  
   return (
-    <div className="grid lg:grid-cols-2 gap-8 max-w-7xl lg:w-full px-4 lg:mx-auto">
+    <div className="grid lg:grid-cols-3 gap-8 max-w-[1800px] lg:w-full px-4 lg:mx-auto">
+       {error ? <div className="col-span-3"><Alert label="Let op" content={error} style="error" /></div> : null}
        {loading ? (
           <div className="flex justify-center items-center">
             <ClipLoader size={50} color={"#123abc"} loading={loading} />

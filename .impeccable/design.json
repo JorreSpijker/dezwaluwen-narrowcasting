@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-17T09:20:50Z",
+  "title": "Design System: KV de Zwaluwen Narrowcasting Dashboard",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Clubblauw",
+        "canonical": "oklch(45% 0.12 250)",
+        "tonalRamp": ["#04182A", "#082D4D", "#0B4A80", "#0F61A5", "#3B82C4", "#79ABDA", "#B6D2EA", "#E8F1FA"]
+      },
+      "primary-deep": {
+        "role": "primary",
+        "displayName": "Clubblauw Diep",
+        "canonical": "oklch(37% 0.11 250)",
+        "tonalRamp": ["#04182A", "#082D4D", "#0B4A80", "#0F61A5", "#3B82C4", "#79ABDA", "#B6D2EA", "#E8F1FA"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Scorebord Wit",
+        "canonical": "oklch(98.4% 0.001 90)",
+        "tonalRamp": ["#1C1917", "#292524", "#57534E", "#78716C", "#A8A29E", "#D6D3D1", "#E7E5E4", "#FAFAF9"]
+      },
+      "neutral-surface": {
+        "role": "neutral",
+        "displayName": "Kaart Wit",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": ["#171717", "#262626", "#525252", "#737373", "#A3A3A3", "#D4D4D4", "#E5E5E5", "#FFFFFF"]
+      },
+      "neutral-border": {
+        "role": "neutral",
+        "displayName": "Lijn Grijs",
+        "canonical": "oklch(92.8% 0.006 264)",
+        "tonalRamp": ["#111827", "#1F2937", "#374151", "#6B7280", "#9CA3AF", "#D1D5DB", "#E5E7EB", "#F9FAFB"]
+      },
+      "neutral-ink": {
+        "role": "neutral",
+        "displayName": "Inkt Grijs",
+        "canonical": "oklch(37.3% 0.034 259)",
+        "tonalRamp": ["#0B1220", "#111827", "#1F2937", "#374151", "#6B7280", "#9CA3AF", "#D1D5DB", "#F3F4F6"]
+      },
+      "neutral-muted": {
+        "role": "neutral",
+        "displayName": "Gedempt Grijs",
+        "canonical": "oklch(55.1% 0.023 264)",
+        "tonalRamp": ["#111827", "#1F2937", "#374151", "#4B5563", "#6B7280", "#9CA3AF", "#D1D5DB", "#F3F4F6"]
+      },
+      "accent-highlight": {
+        "role": "tertiary",
+        "displayName": "Eigen-Club Highlight",
+        "canonical": "oklch(95.1% 0.026 236)",
+        "tonalRamp": ["#082F49", "#0C4A6E", "#075985", "#0284C7", "#38BDF8", "#7DD3FC", "#BAE6FD", "#E0F2FE"]
+      },
+      "success-bg": { "role": "success", "displayName": "Succes Groen Vlak", "canonical": "oklch(87.1% 0.15 154)" },
+      "success-ink": { "role": "success", "displayName": "Succes Groen Inkt", "canonical": "oklch(52.7% 0.154 150)" },
+      "warning-bg": { "role": "warning", "displayName": "Waarschuwing Geel Vlak", "canonical": "oklch(94.5% 0.129 101)" },
+      "warning-ink": { "role": "warning", "displayName": "Waarschuwing Geel Inkt", "canonical": "oklch(64.8% 0.15 85)" },
+      "danger-bg": { "role": "danger", "displayName": "Fout Rood Vlak", "canonical": "oklch(88.5% 0.062 18)" },
+      "danger-ink": { "role": "danger", "displayName": "Fout Rood Inkt", "canonical": "oklch(57.7% 0.245 27)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Sectietitels, leesbaar van across-the-room." },
+      "title": { "displayName": "Title", "purpose": "Tabelkoppen, teamnamen in uitslagen." },
+      "body": { "displayName": "Body", "purpose": "Standen-cijfers, standaard tabelcellen. Kleinste toegestane maat voor primaire data." },
+      "label": { "displayName": "Label", "purpose": "Klok, cache-timestamp. Enige plek kleiner dan Body." }
+    },
+    "shadows": [
+      { "name": "header-ambient", "value": "0 14px 24px rgba(0,0,0,0.1)", "purpose": "Enige schaduw in het systeem, uitsluitend op de sticky header, gecombineerd met backdrop-filter: blur(12px)." }
+    ],
+    "motion": [
+      { "name": "progress-fill", "value": "width 100ms linear", "purpose": "Continue voortgangsindicator voor de 10s auto-cycle." },
+      { "name": "shimmer", "value": "shimmer 2s infinite", "purpose": "Skeleton-loading shimmer tijdens data-fetch." }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Pill Active",
+      "kind": "nav",
+      "refersTo": "nav-pill-active",
+      "description": "Actieve navigatie-pill, gezet door de 10s auto-cycle (geen hover/click op kiosk-scherm).",
+      "html": "<div class=\"ds-nav-pill ds-nav-pill--active\"><svg class=\"ds-nav-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 10h18M8 2v4M16 2v4\"/></svg>Standen jeugd</div>",
+      "css": ".ds-nav-pill { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9999px; color: #1F2937; font-weight: 600; } .ds-nav-pill--active { background: #0F61A5; color: #FFFFFF; } .ds-nav-icon { width: 20px; height: 20px; }"
+    },
+    {
+      "name": "Progress Bar",
+      "kind": "custom",
+      "refersTo": "progress-fill",
+      "description": "Auto-cycle voortgangsindicator boven de sticky header, loopt elke 10s vol.",
+      "html": "<div class=\"ds-progress-track\"><div class=\"ds-progress-fill\" style=\"width: 45%\"></div></div>",
+      "css": ".ds-progress-track { width: 100%; height: 4px; background: #E5E7EB; border-radius: 9999px; position: relative; } .ds-progress-fill { height: 4px; background: #0F61A5; border-radius: 9999px; transition: width 100ms linear; }"
+    },
+    {
+      "name": "Alert Warning",
+      "kind": "custom",
+      "refersTo": "alert-warning",
+      "description": "Standaard/informatieve melding, gele variant (default state van het Alert-component).",
+      "html": "<div class=\"ds-alert ds-alert--warning\" role=\"alert\"><span class=\"ds-alert-badge\">Let op</span><span class=\"ds-alert-message\">Wedstrijd verplaatst naar 15:00</span></div>",
+      "css": ".ds-alert { display: inline-flex; align-items: center; width: 100%; padding: 8px; border-radius: 9999px; background: #FEF08A; color: #CA8A04; } .ds-alert-badge { display: flex; border-radius: 9999px; background: #FFFFFF; color: #CA8A04; text-transform: uppercase; padding: 4px 8px; margin-right: 12px; font-size: 0.75rem; font-weight: 700; } .ds-alert-message { flex: auto; font-weight: 600; margin-right: 8px; }"
+    },
+    {
+      "name": "Standings Table Row (Own Club)",
+      "kind": "custom",
+      "refersTo": "table-row-home",
+      "description": "Rij van KV de Zwaluwen in de standentabel, enige rij-markering in het systeem.",
+      "html": "<tr class=\"ds-table-row ds-table-row--home\"><td class=\"ds-table-cell\">3</td><td class=\"ds-table-cell ds-table-cell--title\">KV de Zwaluwen</td><td class=\"ds-table-cell\">18</td></tr>",
+      "css": ".ds-table-cell { padding: 4px; text-align: left; font-size: 1.125rem; } .ds-table-cell--title { font-weight: 700; } .ds-table-row--home { background: #E0F2FE; }"
+    },
+    {
+      "name": "Skeleton Loader",
+      "kind": "custom",
+      "refersTo": "skeleton",
+      "description": "Shimmer-placeholder tijdens data-fetch, voorkomt lege flits op het kiosk-scherm.",
+      "html": "<div class=\"ds-skeleton\"><div class=\"ds-skeleton-line ds-skeleton-line--sm\"></div><div class=\"ds-skeleton-block\"><div class=\"ds-skeleton-line ds-skeleton-line--lg\"></div></div></div>",
+      "css": ".ds-skeleton { position: relative; overflow: hidden; border-radius: 12px; background: #F3F4F6; padding: 8px; } .ds-skeleton::before { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: ds-shimmer 2s infinite; } .ds-skeleton-line { border-radius: 6px; background: #E5E7EB; height: 20px; } .ds-skeleton-line--sm { width: 64px; margin: 16px; } .ds-skeleton-block { display: flex; justify-content: center; background: #FFFFFF; border-radius: 12px; padding: 32px 16px; margin: 16px; } .ds-skeleton-line--lg { width: 80px; height: 28px; } @keyframes ds-shimmer { 100% { transform: translateX(100%); } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Het Scorebord",
+    "overview": "Dit is geen app, het is een scorebord. Niemand tikt erop, niemand scrollt — het hangt aan de muur en moet in één blik kloppen, van vijf meter afstand, tussen de bar en het veld door. Elke ontwerpkeuze dient scanbaarheid op afstand: grote cijfers, hoog contrast, rust in de marges. Clubblauw (#0F61A5) is de enige plek waar het systeem zich manifesteert als \"van De Zwaluwen\" — verder blijft alles neutraal grijs/wit zodat de data zelf het scherm vult, niet de chrome eromheen. Het systeem wijst generieke SaaS-dashboard-taal expliciet af: geen kaarten-grid voor tabeldata, geen gradient-tekst, geen kleine grijze tekst die van dichtbij gelezen moet worden, geen decoratieve drukte die afleidt van de standen.",
+    "keyCharacteristics": [
+      "Blauw is accent, niet basis — grijs/wit draagt het scherm.",
+      "Type is groot by default; er is geen 'klein lettertype voor bijzaken' op een TV-scherm.",
+      "Vlak in rust; enige diepte zit in de sticky header, verder niets.",
+      "Eén visuele 'eigen club'-marker (sky-highlight rij) — geen tweede concurrerend accentsysteem."
+    ],
+    "rules": [
+      { "name": "De Eén-Accent Regel", "body": "Clubblauw is de enige merkkleur die interactie/nadruk aanduidt (actieve nav, progress-fill). Andere kleur = andere betekenis (semantisch alert, of eigen-club-markering), nooit decoratief.", "section": "colors" },
+      { "name": "De Geen-Kleine-Data Regel", "body": "Standen, uitslagen en programma-cijfers zijn nooit kleiner dan Body (1.125rem). Alleen metadata (klok, cache-timestamp) mag Label-formaat gebruiken.", "section": "typography" },
+      { "name": "De Vlak-Tenzij-Sticky Regel", "body": "Schaduw is gereserveerd voor de sticky header. Alle andere oppervlakken zijn vlak; diepte zou op een TV-scherm ruis toevoegen zonder functie.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do houd clubblauw (#0F61A5) gereserveerd voor actieve nav, progress-fill en toekomstige primaire nadruk — spaarzaam, herkenbaar.",
+      "Do gebruik Body-formaat (1.125rem) of groter voor elk cijfer/naam dat de kernboodschap van een sectie is (standen, uitslagen, programma).",
+      "Do houd de sticky header als enige plek met schaduw/blur; de rest blijft vlak.",
+      "Do gebruik de sky-highlight uitsluitend voor de eigen-club rij in tabellen — geen tweede betekenis eraan hangen."
+    ],
+    "donts": [
+      "Don't gebruik kaarten-grid voor tabeldata — dit is een scorebord, geen SaaS-dashboard.",
+      "Don't gebruik gradient-tekst of decoratieve gradients — geen enkele plek in dit systeem.",
+      "Don't laat primaire data-tekst (standen/uitslagen) onder 1.125rem zakken; dat is niet leesbaar op afstand.",
+      "Don't voeg een tweede accentkleur naast clubblauw toe voor decoratie — elke extra kleur moet semantisch zijn (alert-status of eigen-club-markering).",
+      "Don't voeg schaduwen toe aan tabellen/kaarten om 'diepte' te suggereren — de Vlak-Tenzij-Sticky Regel staat dat alleen toe op de sticky header."
+    ]
+  }
+}

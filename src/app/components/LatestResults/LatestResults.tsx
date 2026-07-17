@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import styles from './LatestResults.module.css'
 import { ClipLoader } from "react-spinners"
-import { getOneWeekAgoDate, getTodayDate, changeDateFormat, changeDateFormatToTime } from "@/utils/DateHelpers";
+import { changeDateFormat, changeDateFormatToTime } from "@/utils/DateHelpers";
 import { checkIfInputIsZwaluwen, checkIfZwaluwenWins } from "@/utils/DisplayHelpers";
 import { clsx } from 'clsx';
+import { useResilientFetch } from "@/utils/useResilientFetch"
+import Alert from "@/app/components/Alert/Alerts"
 
 interface Official {
   roleDescription: string;
@@ -38,54 +39,50 @@ interface Results {
 }
 
 export default function LatestResults() {
-  const [results, setResults] = useState<Results[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const today = getTodayDate();
-  const oneWeekAgo = getOneWeekAgoDate();
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2/results?=&dateFrom=${oneWeekAgo}&dateTo=${today}`)
-      .then(response => response.json())
-      .then(data => {
-        setResults(data)
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error('Error fetching standings:', error)
-      });
-  }, [oneWeekAgo, today]);
+  const { data, loading, error } = useResilientFetch<Results[]>(
+    '/mock-resultaten-programma.json',
+    'latest-results'
+  );
+  const results = data ?? [];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 w-full lg:col-span-2">
-      <h2 className="font-bold text-xl mb-4">Laatste uitslagen (7 dagen)</h2>
+    <div className={clsx(styles.card, 'lg:col-span-2')}>
+      <div className={styles.cardHeader}>
+        <h2 className={styles.title}>Laatste uitslagen (7 dagen)</h2>
+      </div>
+      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
         </div>
       ) : (
         <table className={styles.table}>
+          <colgroup>
+            <col className={styles.colDate} />
+            <col className={styles.colTime} />
+            <col className={styles.colTeam} />
+            <col className={styles.colTeam} />
+            <col className={styles.colWide} />
+          </colgroup>
           <thead>
-            <tr className={styles.tableHeader}>
-              <th className="">Datum</th>
-              <th className="">Tijd</th>
-              <th className="">Thuisploeg</th>
-              <th className="">Eindstand</th>
-              <th className="">Uitploeg</th>
+            <tr>
+              <th className={styles.tableHeader}>Datum</th>
+              <th className={clsx(styles.tableHeader, styles.tableHeaderCenter)}>Tijd</th>
+              <th className={styles.tableHeader}>Thuisploeg</th>
+              <th className={styles.tableHeader}>Uitploeg</th>
+              <th className={clsx(styles.tableHeader)}>Eindstand</th>
             </tr>
           </thead>
           <tbody>
             {results.flatMap(result => result.matches).map((match, index) => (
-              <tr key={index} className={clsx(checkIfZwaluwenWins(match) ? 'bg-green-200' : '')}>
+              <tr key={index} className={clsx(checkIfZwaluwenWins(match) ? styles.win : '')}>
                 <td className={styles.tableCell}>{changeDateFormat(match.date)}</td>
-                <td className={styles.tableCell}>{changeDateFormatToTime(match.date)}</td>
-                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.home.name) ? 'font-bold' : '')}>
+                <td className={clsx(styles.tableCell, styles.tableCellCenter)}>{changeDateFormatToTime(match.date)}</td>
+                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.home.name) ? styles.tableCellStrong : '')}>
                   {match.teams.home.name}
                 </td>
-                <td className={styles.tableCell}>{match.stats.home.score} - {match.stats.away.score}</td>
-                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.away.name) ? 'font-bold' : '')}>{match.teams.away.name}</td>
+                <td className={clsx(styles.tableCell, checkIfInputIsZwaluwen(match.teams.away.name) ? styles.tableCellStrong : '')}>{match.teams.away.name}</td>
+                <td className={clsx(styles.tableCell, styles.tableCellStrong)}>{match.stats.home.score} - {match.stats.away.score}</td>
               </tr>
             ))}
           </tbody>
