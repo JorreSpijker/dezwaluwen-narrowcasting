@@ -10,7 +10,7 @@ import Alert from "@/app/components/Alert/Alerts";
 export default function StandingsPage() {
   const { data, loading, error } = useResilientFetch<Teams[]>(FetchPathJeugd, 'teams-jeugd');
   const teams = data ?? [];
-
+  console.log('teams', teams);
   return (
     <div className="grid lg:grid-cols-3 gap-8 max-w-[1800px] lg:w-full  px-4 lg:mx-auto">
        {error ? <div className="col-span-3"><Alert label="Error" content={error} style="error" /></div> : null}

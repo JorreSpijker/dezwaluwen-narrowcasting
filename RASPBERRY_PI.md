@@ -6,8 +6,7 @@ Handleiding om deze Next.js app lokaal te draaien op een Raspberry Pi, en automa
 
 - Raspberry Pi 3B+ of nieuwer (Pi 4 aanbevolen voor Next.js build)
 - Raspberry Pi OS **met desktop** (Bookworm), 64-bit aanbevolen
-- Netwerkverbinding (voor build en Supabase-data)
-- Supabase URL + anon key (staan al in `.env.local` van dit project)
+- Netwerkverbinding (voor build)
 
 ## 1. Node.js installeren
 
@@ -27,18 +26,7 @@ git clone <repo-url> narrowcasting
 cd narrowcasting
 ```
 
-## 3. Environment variables
-
-Maak `.env.local` aan in de projectroot met:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=<jouw-supabase-url>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<jouw-supabase-anon-key>
-```
-
-Deze waarden staan al in het bestaande `.env.local` op de development-machine — kopieer ze over (niet via git, `.env.local` staat in `.gitignore`).
-
-## 4. Dependencies installeren en builden
+## 3. Dependencies installeren en builden
 
 ```bash
 npm install
@@ -47,7 +35,7 @@ npm run build
 
 Build kan op een Pi 3 enkele minuten duren.
 
-## 5. App als service draaien (survives reboot)
+## 4. App als service draaien (survives reboot)
 
 Maak een systemd service zodat de app automatisch start en herstart bij crash:
 
@@ -66,13 +54,18 @@ After=network.target
 Type=simple
 User=pi
 WorkingDirectory=/home/pi/narrowcasting
+ExecStartPre=/usr/bin/git pull
+ExecStartPre=/usr/bin/npm install
+ExecStartPre=/usr/bin/npm run build
 ExecStart=/usr/bin/npm run start
 Restart=always
-Environment=PORT=3000
+Environment=PORT=1956
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+`ExecStartPre` regels draaien bij elke start van de service (dus ook bij boot/reboot): pull, install, build, dan pas start. Build kost tijd (minuten op Pi 3) — kiosk-script wacht sowieso tot server bereikbaar is.
 
 Activeren:
 
@@ -88,9 +81,9 @@ Check:
 sudo systemctl status narrowcasting.service
 ```
 
-App draait nu op `http://localhost:3000`.
+App draait nu op `http://localhost:1956`.
 
-## 6. Auto-login naar desktop
+## 5. Auto-login naar desktop
 
 Kiosk mode vereist dat de Pi automatisch inlogt op het bureaublad (niet op login-scherm blijft staan):
 
@@ -100,7 +93,7 @@ sudo raspi-config
 
 Kies: `1 System Options` → `S5 Boot / Auto Login` → `B4 Desktop Autologin`.
 
-## 7. Chromium fullscreen bij boot (kiosk mode)
+## 6. Chromium fullscreen bij boot (kiosk mode)
 
 Maak een autostart-bestand aan:
 
@@ -134,13 +127,13 @@ xset -dpms
 xset s noblank
 
 # wacht tot de Next.js server bereikbaar is
-until curl -s http://localhost:3000 > /dev/null; do
+until curl -s http://localhost:1956 > /dev/null; do
   sleep 1
 done
 
 chromium-browser --noerrdialogs --disable-infobars --kiosk --incognito \
   --disable-session-crashed-bubble --disable-translate \
-  http://localhost:3000
+  http://localhost:1956
 ```
 
 Uitvoerbaar maken:
@@ -151,7 +144,7 @@ chmod +x ~/kiosk.sh
 
 `xset` regels zetten schermbeveiliging/standby uit. `--kiosk` geeft fullscreen zonder browser-UI. `--incognito` voorkomt "herstel vorige sessie"-meldingen.
 
-## 8. (Optioneel) Muiscursor verbergen
+## 7. (Optioneel) Muiscursor verbergen
 
 ```bash
 sudo apt install -y unclutter
@@ -159,7 +152,7 @@ sudo apt install -y unclutter
 
 Voeg toe aan `~/.config/autostart/` een tweede `.desktop` entry, of zet `unclutter -idle 0.1 &` bovenaan in `kiosk.sh`.
 
-## 9. Testen
+## 8. Testen
 
 ```bash
 sudo reboot

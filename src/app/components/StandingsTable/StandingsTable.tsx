@@ -36,7 +36,6 @@ interface Standings {
 interface StandingsTableProps {
   teamName?: string;
   poolId?: string;
-  name?: string;
 }
 
 export default function StandingsTable({ teamName, poolId }: StandingsTableProps) {

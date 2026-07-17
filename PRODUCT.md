@@ -10,7 +10,7 @@ Leden en bezoekers van korfbalvereniging KV de Zwaluwen, in het clubhuis. Bekijk
 
 ## Product Purpose
 
-Narrowcasting dashboard toont actuele standen (jeugd/senioren), wedstrijduitslagen en programma van KV de Zwaluwen. Draait als kiosk-app op Raspberry Pi, cyclet automatisch elke 10 seconden door secties (Resultaten & Programma, Standen jeugd, Standen senioren). Data komt uit Supabase/Airtable. Succes = altijd actuele info, in één oogopslag leesbaar op afstand, zonder enige input nodig.
+Narrowcasting dashboard toont actuele standen (jeugd/senioren), wedstrijduitslagen en programma van KV de Zwaluwen. Draait als kiosk-app op Raspberry Pi, cyclet automatisch elke 10 seconden door secties (Resultaten & Programma, Standen jeugd, Standen senioren). Data komt uit Airtable. Succes = altijd actuele info, in één oogopslag leesbaar op afstand, zonder enige input nodig.
 
 ## Brand Personality
 

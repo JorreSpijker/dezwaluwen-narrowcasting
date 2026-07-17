@@ -1,2 +1,2 @@
-export const FetchPathJeugd = '/2024-2025/veld_vj/teams_jeugd.json';
-export const FetchPathSenioren = '/2024-2025/veld_vj/teams_senioren.json';
+export const FetchPathJeugd = '/2026-2027/veld_nj/teams_jeugd.json';
+export const FetchPathSenioren = '/2026-2027/veld_nj/teams_senioren.json';

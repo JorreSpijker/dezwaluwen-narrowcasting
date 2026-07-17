@@ -35,14 +35,12 @@ interface ResilientFetchResult<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
-  stale: boolean;
 }
 
 export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [stale, setStale] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -58,7 +56,6 @@ export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFe
       // eslint-disable-next-line react-hooks/set-state-in-effect -- synchronous localStorage read, geen React Compiler in dit project
       setData(cached.data);
       setError(null);
-      setStale(false);
       setLoading(false);
       return;
     }
@@ -70,7 +67,6 @@ export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFe
           if (cancelled) return;
           setData(json as T);
           setError(null);
-          setStale(false);
           setLoading(false);
           const entry: CacheEntry<T> = { data: json as T, timestamp: Date.now() };
           localStorage.setItem(cacheKey, JSON.stringify(entry));
@@ -91,7 +87,6 @@ export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFe
           setLoading(false);
           if (cached) {
             setData(cached.data);
-            setStale(true);
             setError(`Kan geen verbinding maken, toont laatst bekende gegevens.\n${detail}`);
           } else {
             setError(`Kan geen verbinding maken.\n${detail}`);
@@ -106,5 +101,5 @@ export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFe
     };
   }, [url, cacheKey]);
 
-  return { data, loading, error, stale };
+  return { data, loading, error };
 }
