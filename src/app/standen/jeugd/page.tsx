@@ -13,7 +13,7 @@ export default function StandingsPage() {
 
   return (
     <div className="grid lg:grid-cols-3 gap-8 max-w-[1800px] lg:w-full  px-4 lg:mx-auto">
-       {error ? <div className="col-span-3"><Alert label="Let op" content={error} style="error" /></div> : null}
+       {error ? <div className="col-span-3"><Alert label="Error" content={error} style="error" /></div> : null}
        {loading ? (
           <div className="flex justify-center items-center">
             <ClipLoader size={50} color={"#123abc"} loading={loading} />

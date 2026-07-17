@@ -50,7 +50,7 @@ export default function LatestResults() {
       <div className={styles.cardHeader}>
         <h2 className={styles.title}>Laatste uitslagen (7 dagen)</h2>
       </div>
-      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
+      {error ? <div className="mb-4"><Alert label="Error" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />

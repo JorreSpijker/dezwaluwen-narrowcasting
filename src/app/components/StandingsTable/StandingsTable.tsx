@@ -53,7 +53,7 @@ export default function StandingsTable({ teamName, poolId }: StandingsTableProps
           <span className={styles.poolName}>{standingsData[0].pool.name}</span>
         ) : null}
       </div>
-      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
+      {error ? <div className="mb-4"><Alert label="Error" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />

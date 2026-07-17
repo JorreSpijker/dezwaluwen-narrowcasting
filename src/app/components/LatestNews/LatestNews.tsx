@@ -22,7 +22,7 @@ export default function LatestNews() {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 w-full h-full">
       <h2 className="font-bold text-2xl mb-4">Laatste nieuws</h2>
-      {error ? <div className="mb-4"><Alert label="Let op" content={error} style="error" /></div> : null}
+      {error ? <div className="mb-4"><Alert label="Error" content={error} style="error" /></div> : null}
       {loading ? (
         <div className="flex justify-center items-center">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />

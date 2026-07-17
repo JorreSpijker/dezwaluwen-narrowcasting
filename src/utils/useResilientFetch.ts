@@ -86,14 +86,15 @@ export function useResilientFetch<T>(url: string, cacheKey: string): ResilientFe
             }, delay);
             return;
           }
-          console.error(`Error fetching ${url}:`, err);
+          const detail = `Error fetching ${url}: ${err}`;
+          console.error(detail);
           setLoading(false);
           if (cached) {
             setData(cached.data);
             setStale(true);
-            setError('Kan geen verbinding maken, toont laatst bekende gegevens.');
+            setError(`Kan geen verbinding maken, toont laatst bekende gegevens.\n${detail}`);
           } else {
-            setError('Kan geen verbinding maken.');
+            setError(`Kan geen verbinding maken.\n${detail}`);
           }
         });
     };
