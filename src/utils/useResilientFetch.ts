@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const RETRY_DELAYS = [1000, 2000, 4000];
-const CACHE_TTL = 15 * 60 * 1000; // 15 minuten
+export const CACHE_TTL = 10 * 60 * 1000; // 10 minuten
 
 // Dedupe gelijktijdige fetches naar dezelfde url (bv. meerdere teams in dezelfde pool).
 const inFlightRequests = new Map<string, Promise<unknown>>();
