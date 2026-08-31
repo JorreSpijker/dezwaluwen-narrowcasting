@@ -4,7 +4,7 @@ import styles from './ProgramAllTeams.module.css'
 import { ClipLoader } from "react-spinners"
 import { checkIfInputIsZwaluwen } from "@/utils/DisplayHelpers";
 import { clsx } from 'clsx';
-import { changeDateFormat, changeDateFormatToTime } from "@/utils/DateHelpers";
+import { changeDateFormat, changeDateFormatToTime, getNextweek, getTodayDate } from "@/utils/DateHelpers";
 import { useResilientFetch } from "@/utils/useResilientFetch"
 import Alert from "@/app/components/Alert/Alerts"
 
@@ -39,8 +39,10 @@ interface Program {
 }
 
 export default function ProgramAllTeams() {
+  const today = getTodayDate();
+  const nextWeek = getNextweek();
   const { data, loading, error } = useResilientFetch<Program[]>(
-    '/mock-resultaten-programma.json',
+    `https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2/program?=&dateFrom=${today}&dateTo=${nextWeek}`,
     'program-all-teams'
   );
   const program = data ?? [];

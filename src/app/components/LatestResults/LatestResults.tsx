@@ -2,7 +2,7 @@
 
 import styles from './LatestResults.module.css'
 import { ClipLoader } from "react-spinners"
-import { changeDateFormat, changeDateFormatToTime } from "@/utils/DateHelpers";
+import { changeDateFormat, changeDateFormatToTime, getOneWeekAgoDate, getTodayDate } from "@/utils/DateHelpers";
 import { checkIfInputIsZwaluwen, checkIfZwaluwenWins } from "@/utils/DisplayHelpers";
 import { clsx } from 'clsx';
 import { useResilientFetch } from "@/utils/useResilientFetch"
@@ -39,8 +39,10 @@ interface Results {
 }
 
 export default function LatestResults() {
+  const today = getTodayDate();
+  const oneWeekAgo = getOneWeekAgoDate();
   const { data, loading, error } = useResilientFetch<Results[]>(
-    '/mock-resultaten-programma.json',
+    `https://api-mijn.korfbal.nl/api/v2/clubs/NCX35M2/results?=&dateFrom=${oneWeekAgo}&dateTo=${today}`,
     'latest-results'
   );
   const results = data ?? [];
